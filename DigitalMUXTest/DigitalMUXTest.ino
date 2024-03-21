@@ -64,11 +64,11 @@ void setup()
   //Initialize all the sensors
   bool initSuccess = true;
 
-  myMux.setPort(1);
+  myMux.setPort(0);
   if(!irSensor.begin()){
     initSuccess = false;
     }
-  myMux.setPort(0);
+  myMux.setPort(1);
   if(!visSensor.begin()){
     initSuccess = false;
   }
