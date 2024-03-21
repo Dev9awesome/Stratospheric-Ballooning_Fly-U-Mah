@@ -68,7 +68,7 @@ void setup()
   if(!irSensor.begin()){
     initSuccess = false;
     }
-  myMux.setPort(1);
+  myMux.setPort(0);
   if(!visSensor.begin()){
     initSuccess = false;
   }
@@ -104,6 +104,7 @@ void loop()
         Serial.print(visSensor.getCalibratedOrange(), 2);
         Serial.print("] R[");
         Serial.print(visSensor.getCalibratedRed(), 2);
+        Serial.println();
       
      myMux.setPort(0);
      irSensor.takeMeasurements();
@@ -120,6 +121,7 @@ void loop()
         Serial.print(irSensor.getCalibratedV(), 2);
         Serial.print("] W[");
         Serial.print(irSensor.getCalibratedW(), 2);
+        Serial.println();
       
       
   }
