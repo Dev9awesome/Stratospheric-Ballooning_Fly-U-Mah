@@ -1,3 +1,5 @@
+
+
 /************************************************
       MnSGC Ballooning/Rocketry PADL-33 Flight Code
       Created by: Ashton Posey
@@ -18,7 +20,12 @@
 #include <math.h>
 #include <SparkFun_u-blox_GNSS_Arduino_Library.h> // http://librarymanager/All#SparkFun_u-blox_GNSS
 #include <SparkFun_KX13X.h> // http://librarymanager/All#SparkFun_KX13X
-#include <SFE_MicroOLED.h>  // https://github.com/sparkfun/SparkFun_Micro_OLED_Arduino_Library
+#include <SFE_MicroOLED.h>  // https://github.com/sparkfun/SparkFun_Micro_OLED_Arduino_Librar
+
+#include <SparkFun_I2C_Mux_Arduino_Library.h> 
+#include "Adafruit_SGP30.h"
+#include "Adafruit_BME680.h"
+
 
 #include "OLED.h"
 #include "Thermistor.h"
@@ -27,12 +34,19 @@
 #include "variables.h" // Must be Last in the Include list
 
 //////////////////////////////////////////// GLOBAL VARIABLES ////////////////////////////////////////////
-String header = "hh:mm:ss,FltTimer,T(s),T(ms),Hz,T2,T3,T4,T5,T6,totT,extT(F) or ADC,extT(C),intT(F),intT(C),Fix Type,RTK,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAcc(MM),VertAcc(MM),VertVel(Fte3/S),VertVel(MM/S),ECEFstat,ECEFX(CM),ECEFY(CM),ECEFZ(CM),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,kPa,ATM,PSI,C,F,Ft,M,VV(Ft),VV(M),G(y),G(x),G(z),Deg/S(x),Deg/S(y),Deg/S(z),uT(x),uT(y),uT(z)," + String(Version);
+String header = "hh:mm:ss,FltTimer,T(s),T(ms),Hz,T2,T3,T4,T5,T6,totT,extT(F) or ADC,extT(C),intT(F),intT(C),Fix Type,RTK,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAcc(MM),VertAcc(MM),VertVel(Fte3/S),VertVel(MM/S),ECEFstat,ECEFX(CM),ECEFY(CM),ECEFZ(CM),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,kPa,ATM,PSI,C,F,Ft,M,VV(Ft),VV(M),G(y),G(x),G(z),Deg/S(x),Deg/S(y),Deg/S(z),uT(x),uT(y),uT(z),Humidity(%),GasResistance(kOhm)" + String(Version);
 
-// float myVariable = 0; // Example
 
 //////////////////////////////////////////// GLOBAL VARIABLES ////////////////////////////////////////////
 
+//Digital MUX (new)
+QWIICMUX myMux;
+final int NUMBER_OF_SPECTRO_SENSORS = 2;
+//SGP30 MOX sensor (new)
+//Adafruit_SGP30 **vocSensor;
+
+//BME688 (new)
+Adafruit_BME680 airSensor;
 
 void setup() { //////////////////////////////////////////// SETUP END ////////////////////////////////////////////
 
@@ -40,6 +54,17 @@ void setup() { //////////////////////////////////////////// SETUP END //////////
 
 //////////////////////////////////////////// ADD SETUP CODE HERE ////////////////////////////////////////////
 
+//BME688 (new)
+if(!airSensor.begin()){
+  Serial.print("AQ Sensor Not Found");
+  }
+//Default oversampling and filter init
+airSensor.setTemperatureOversampling(BME680_OS_8X);
+airSensor.setHumidityOversampling(BME680_OS_2X);
+airSensor.setPressureOversampling(BME680_OS_4X);
+airSensor.setIIRFilterSize(BME680_FILTER_SIZE_3);
+airSensor.setGasHeater(320, 150); // 320*C for 150 ms
+  
 
 //////////////////////////////////////////// ADD SETUP CODE HERE ////////////////////////////////////////////
 
@@ -61,7 +86,8 @@ void updateData(){
     systemUpdate();
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
-
+//BME688 (new)
+airSensor.performReading();
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
 
@@ -216,6 +242,10 @@ void updateData(){
     data += magData.y;
     data += ",";
     data += magData.z;
+    data += ",";
+    data += airSensor.humidity;
+    data += ",";
+    data += airSensor.gas_resistance / 1000.0;
     data += "\n";
 
     Serial.print(data);
