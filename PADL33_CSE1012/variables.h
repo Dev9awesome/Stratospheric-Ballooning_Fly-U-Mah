@@ -134,7 +134,7 @@ int proximity = 0;
 unsigned long hzPrevTime = 0;
 float frequencyHz = 0;
 
-byte timer2 = 0, timer3 = 0, timer4 = 0, timer5 = 0, timer6 = 0, timer7 = 0, timerTotal = 0;;
+byte timer2 = 0, timer3 = 0, timer4 = 0, timer5 = 0, timer6 = 0, timer7 = 0, timerGas = 0, timerSpectral = 0, timerTotal = 0;;
 
 ////////////////////////////////////////////////////////// GPS //////////////////////////////////////////////////////////
 
@@ -145,6 +145,14 @@ byte gpsStatus = 0;
 
 SFE_UBLOX_GNSS sparkFunGNSS;
 dynModel dynamicModel = DYN_MODEL_AIRBORNE4g; //setting dynamic model to 8 (airborne 4g) for rocket, 2g (for pterydactyl is 7)
+
+//BME688 Variables (new)
+float humidityData;
+float resistanceData;
+
+//Light and Mux Variables (new)
+float irData[6];
+float visData[6]; 
 
 bool hpGPS = false;
 int gpsMonth = 999;

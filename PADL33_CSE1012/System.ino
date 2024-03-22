@@ -159,6 +159,15 @@ void systemUpdate(){
 
     timerSec = timer/1000.0;
 
+    //new BME688 gasUpdate logic
+    timerGas = millis();
+    gasUpdate();
+    timerGas = millis() - timerGas;
+
+    timerSpectral = millis();
+    lightUpdate();
+    timerSpectral = millis() - timerSpectral;
+
     timer2 = millis(); ///////////// Timer 2 Start ///////////// 
     
     gpsUpdate();

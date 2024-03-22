@@ -34,6 +34,7 @@
 
 #include "variables.h" // Must be Last in the Include list
 
+
 //////////////////////////////////////////// GLOBAL VARIABLES ////////////////////////////////////////////
 String header = "hh:mm:ss,FltTimer,T(s),T(ms),Hz,T2,T3,T4,T5,T6,totT,extT(F) or ADC,extT(C),intT(F),intT(C),Fix Type,RTK,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAcc(MM),VertAcc(MM),VertVel(Fte3/S),VertVel(MM/S),ECEFstat,ECEFX(CM),ECEFY(CM),ECEFZ(CM),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,kPa,ATM,PSI,C,F,Ft,M,VV(Ft),VV(M),G(y),G(x),G(z),Deg/S(x),Deg/S(y),Deg/S(z),uT(x),uT(y),uT(z),Humidity(%),GasResistance(kOhm),IR-R-reading,IR-S-reading,IR-T-reading,IR-U-reading,IR-V-reading,IR-W-reading,VIS-V-reading,VIS-B-reading,VIS-G-reading,VIS-Y-reading,VIS-O-reading,VIS-R-reading" + String(Version);
 
@@ -50,6 +51,8 @@ AS726X visSensor;
 
 //BME688 (new)
 Adafruit_BME680 airSensor;
+
+
 
 void setup() { //////////////////////////////////////////// SETUP END ////////////////////////////////////////////
 
@@ -68,6 +71,8 @@ airSensor.setPressureOversampling(BME680_OS_4X);
 airSensor.setIIRFilterSize(BME680_FILTER_SIZE_3);
 airSensor.setGasHeater(320, 150); // 320*C for 150 ms
 
+delay(1000);
+
 //Vis, IR, and Mux (new)
 if (myMux.begin() == false)
   {
@@ -79,10 +84,13 @@ myMux.setPort(0);
 if(!irSensor.begin()){
 
     }
+delay(1000);
+
 myMux.setPort(1);
 if(!visSensor.begin()){
 
   }
+delay(1000);
 //////////////////////////////////////////// ADD SETUP CODE HERE ////////////////////////////////////////////
 
 } ///////////////////////////////////////////////////////// SETUP END ////////////////////////////////////////////
@@ -104,17 +112,17 @@ void updateData(){
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
 //BME688 (new)
-airSensor.performReading();
-myMux.setPort(0);
-irSensor.takeMeasurements();
-String irData = String(irSensor.getCalibratedR()) + "," + String(irSensor.getCalibratedS()) + "," + String(irSensor.getCalibratedT()) + "," + String(irSensor.getCalibratedU()) + "," + String(irSensor.getCalibratedV()) + "," + String(irSensor.getCalibratedW());
-myMux.setPort(1);
-visSensor.takeMeasurements();
-String visData = String(visSensor.getCalibratedViolet()) + "," + String(visSensor.getCalibratedBlue()) + "," + String(visSensor.getCalibratedGreen()) + "," + String(visSensor.getCalibratedYellow()) + "," + String(visSensor.getCalibratedOrange()) + "," + String(visSensor.getCalibratedRed());
-
-Serial.println("BME688 Readings: " + airSensor.gas_resistance);
-Serial.println("IR Sensor Readings: " + irData);
-Serial.println("VIS Sensor Readings: " + visData);
+//airSensor.performReading();
+//myMux.setPort(0);
+//irSensor.takeMeasurements();
+//String irDataString = String(irSensor.getCalibratedR()) + "," + String(irSensor.getCalibratedS()) + "," + String(irSensor.getCalibratedT()) + "," + String(irSensor.getCalibratedU()) + "," + String(irSensor.getCalibratedV()) + "," + String(irSensor.getCalibratedW());
+//myMux.setPort(1);
+//visSensor.takeMeasurements();
+//String visData = String(visSensor.getCalibratedViolet()) + "," + String(visSensor.getCalibratedBlue()) + "," + String(visSensor.getCalibratedGreen()) + "," + String(visSensor.getCalibratedYellow()) + "," + String(visSensor.getCalibratedOrange()) + "," + String(visSensor.getCalibratedRed());
+//
+//Serial.println("BME688 Readings: " + airSensor.gas_resistance);
+//Serial.println("IR Sensor Readings: " + irData);
+//Serial.println("VIS Sensor Readings: " + visData);
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
 
     data = flightTimer;
@@ -269,33 +277,33 @@ Serial.println("VIS Sensor Readings: " + visData);
     data += ",";
     data += magData.z;
     data += ",";
-    data += airSensor.humidity;
+    data += humidityData; 
     data += ",";
-    data += airSensor.gas_resistance / 1000.0;
+    data += resistanceData;
     data += ",";
-    data += irSensor.getCalibratedR();
+    data += irData[0];
     data += ",";
-    data += irSensor.getCalibratedS();
+    data += irData[1];
     data += ",";
-    data += irSensor.getCalibratedT();
+    data += irData[2];
     data += ",";
-    data += irSensor.getCalibratedU();
+    data += irData[3];
     data += ",";
-    data += irSensor.getCalibratedV();
+    data += irData[4];
     data += ",";
-    data += irSensor.getCalibratedR();
+    data += irData[5];
     data += ",";
-    data += visSensor.getCalibratedViolet();
+    data += visData[0];
     data += ",";
-    data += visSensor.getCalibratedBlue();
+    data += visData[1];
     data += ",";
-    data += visSensor.getCalibratedGreen();
+    data += visData[2];
     data += ",";
-    data += visSensor.getCalibratedYellow();
+    data += visData[3];
     data += ",";
-    data += visSensor.getCalibratedOrange();
+    data += visData[4];
     data += ",";
-    data += visSensor.getCalibratedRed();
+    data += visData[5];
     data += "\n";
 
     //Serial.print(data);
