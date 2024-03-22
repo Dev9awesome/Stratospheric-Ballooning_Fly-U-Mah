@@ -155,6 +155,7 @@ void systemSetUp(){
 }
 
 void systemUpdate(){
+    Serial.println("System Update Start");
     YELLOW_LED.on();
 
     timerSec = timer/1000.0;
@@ -162,10 +163,12 @@ void systemUpdate(){
     //new BME688 gasUpdate logic
     timerGas = millis();
     gasUpdate();
+    Serial.println("Gas Update End");
     timerGas = millis() - timerGas;
 
     timerSpectral = millis();
     lightUpdate();
+    Serial.println("Light Update End");
     timerSpectral = millis() - timerSpectral;
 
     timer2 = millis(); ///////////// Timer 2 Start ///////////// 

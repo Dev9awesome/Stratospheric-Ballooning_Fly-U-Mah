@@ -36,7 +36,7 @@
 
 
 //////////////////////////////////////////// GLOBAL VARIABLES ////////////////////////////////////////////
-String header = "hh:mm:ss,FltTimer,T(s),T(ms),Hz,T2,T3,T4,T5,T6,totT,extT(F) or ADC,extT(C),intT(F),intT(C),Fix Type,RTK,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAcc(MM),VertAcc(MM),VertVel(Fte3/S),VertVel(MM/S),ECEFstat,ECEFX(CM),ECEFY(CM),ECEFZ(CM),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,kPa,ATM,PSI,C,F,Ft,M,VV(Ft),VV(M),G(y),G(x),G(z),Deg/S(x),Deg/S(y),Deg/S(z),uT(x),uT(y),uT(z),Humidity(%),GasResistance(kOhm),IR-R-reading,IR-S-reading,IR-T-reading,IR-U-reading,IR-V-reading,IR-W-reading,VIS-V-reading,VIS-B-reading,VIS-G-reading,VIS-Y-reading,VIS-O-reading,VIS-R-reading" + String(Version);
+String header = "hh:mm:ss,FltTimer,T(s),T(ms),Hz,T2,T3,T4,T5,T6,totT,extT(F) or ADC,extT(C),intT(F),intT(C),Fix Type,RTK,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAcc(MM),VertAcc(MM),VertVel(Fte3/S),VertVel(MM/S),ECEFstat,ECEFX(CM),ECEFY(CM),ECEFZ(CM),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,kPa,ATM,PSI,C,F,Ft,M,VV(Ft),VV(M),G(y),G(x),G(z),Deg/S(x),Deg/S(y),Deg/S(z),uT(x),uT(y),uT(z),Humidity(%),GasResistance(kOhm),IR-R-reading,IR-S-reading,IR-T-reading,IR-U-reading,IR-V-reading,IR-W-reading,VIS-V-reading,VIS-B-reading,VIS-G-reading,VIS-Y-reading,VIS-O-reading,VIS-R-reading," + String(Version);
 
 
 //////////////////////////////////////////// GLOBAL VARIABLES ////////////////////////////////////////////
@@ -82,15 +82,17 @@ if (myMux.begin() == false)
   }   
 myMux.setPort(0);
 if(!irSensor.begin()){
-
+  Serial.println("IR NOT DETECTED");
     }
 delay(1000);
 
 myMux.setPort(1);
 if(!visSensor.begin()){
-
+  Serial.println("VIS NOT DETECTED");
   }
 delay(1000);
+
+Serial.println("SETUP ENDED");
 //////////////////////////////////////////// ADD SETUP CODE HERE ////////////////////////////////////////////
 
 } ///////////////////////////////////////////////////////// SETUP END ////////////////////////////////////////////
@@ -307,6 +309,7 @@ void updateData(){
     data += "\n";
 
     //Serial.print(data);
+    Serial.println(visData[2]);
 
     timer5 = millis() - timer7; ///////////// Timer 5 End ///////////// 
     
