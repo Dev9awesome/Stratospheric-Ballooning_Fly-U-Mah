@@ -13,7 +13,7 @@ void lightUpdate(){
   myMux.setPort(IR_MUX_PORT);
   irSensor.takeMeasurements();
 
-  //Array for IR data is filled with readings
+  //Array for IR data is filled with readings. Raw values have a consistent maximum 
   irData[0] = irSensor.getR();
   irData[1] = irSensor.getS();
   irData[2] = irSensor.getT();

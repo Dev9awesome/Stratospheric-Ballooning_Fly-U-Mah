@@ -169,6 +169,10 @@ void systemUpdate(){
     lightUpdate();
     timerSpectral = millis() - timerSpectral;
 
+    timerMuxTherm = millis();
+    muxThermUpdate();
+    timerMuxTherm = millis() - timerMuxTherm;
+
     timer2 = millis(); ///////////// Timer 2 Start ///////////// 
     
     gpsUpdate();
