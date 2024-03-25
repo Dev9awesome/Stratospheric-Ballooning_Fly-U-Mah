@@ -155,20 +155,18 @@ void systemSetUp(){
 }
 
 void systemUpdate(){
-    Serial.println("System Update Start");
     YELLOW_LED.on();
 
     timerSec = timer/1000.0;
 
-    //new BME688 gasUpdate logic
+    ////Light Sensor (BME688) non-blocking update logic
     timerGas = millis();
     gasUpdate();
-    Serial.println("Gas Update End");
     timerGas = millis() - timerGas;
 
+    //Light Sensor (AS726x) non-blocking update logic
     timerSpectral = millis();
     lightUpdate();
-    Serial.println("Light Update End");
     timerSpectral = millis() - timerSpectral;
 
     timer2 = millis(); ///////////// Timer 2 Start ///////////// 

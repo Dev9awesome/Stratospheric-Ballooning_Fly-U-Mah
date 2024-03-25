@@ -47,7 +47,6 @@ QWIICMUX myMux;
 AS726X irSensor;
 AS726X visSensor;
 //SGP30 MOX sensor (new)
-//Adafruit_SGP30 **vocSensor;
 
 //BME688 (new)
 Adafruit_BME680 airSensor;
@@ -60,16 +59,19 @@ void setup() { //////////////////////////////////////////// SETUP END //////////
 
 //////////////////////////////////////////// ADD SETUP CODE HERE ////////////////////////////////////////////
 
+//Delays for safety, mimics code in systemSetUp() function
+
 //BME688 (new)
 if(!airSensor.begin()){
   Serial.print("AQ Sensor Not Found");
   }
-//Default oversampling and filter init
-airSensor.setTemperatureOversampling(BME680_OS_8X);
-airSensor.setHumidityOversampling(BME680_OS_2X);
-airSensor.setPressureOversampling(BME680_OS_4X);
+//Minimum oversampling for all values except humidity. Data Readings(ODR) every 500ms, and default gas heater settings
+airSensor.setTemperatureOversampling(BME68X_OS_1X);
+airSensor.setHumidityOversampling(BME68X_OS_2X);
+airSensor.setPressureOversampling(BME68X_OS_1X);
 airSensor.setIIRFilterSize(BME680_FILTER_SIZE_3);
 airSensor.setGasHeater(320, 150); // 320*C for 150 ms
+airSensor.setODR(BME68X_ODR_500_MS);
 
 delay(1000);
 
@@ -80,13 +82,13 @@ if (myMux.begin() == false)
     while (1)
       ;
   }   
-myMux.setPort(0);
+myMux.setPort(IR_MUX_PORT);
 if(!irSensor.begin()){
   Serial.println("IR NOT DETECTED");
     }
 delay(1000);
 
-myMux.setPort(1);
+myMux.setPort(VIS_MUX_PORT);
 if(!visSensor.begin()){
   Serial.println("VIS NOT DETECTED");
   }
@@ -113,18 +115,7 @@ void updateData(){
     systemUpdate();
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
-//BME688 (new)
-//airSensor.performReading();
-//myMux.setPort(0);
-//irSensor.takeMeasurements();
-//String irDataString = String(irSensor.getCalibratedR()) + "," + String(irSensor.getCalibratedS()) + "," + String(irSensor.getCalibratedT()) + "," + String(irSensor.getCalibratedU()) + "," + String(irSensor.getCalibratedV()) + "," + String(irSensor.getCalibratedW());
-//myMux.setPort(1);
-//visSensor.takeMeasurements();
-//String visData = String(visSensor.getCalibratedViolet()) + "," + String(visSensor.getCalibratedBlue()) + "," + String(visSensor.getCalibratedGreen()) + "," + String(visSensor.getCalibratedYellow()) + "," + String(visSensor.getCalibratedOrange()) + "," + String(visSensor.getCalibratedRed());
-//
-//Serial.println("BME688 Readings: " + airSensor.gas_resistance);
-//Serial.println("IR Sensor Readings: " + irData);
-//Serial.println("VIS Sensor Readings: " + visData);
+
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
 
     data = flightTimer;
@@ -279,6 +270,7 @@ void updateData(){
     data += ",";
     data += magData.z;
     data += ",";
+    //FLY-U-MAH CUSTOM DATA BEGINS HERE
     data += humidityData; 
     data += ",";
     data += resistanceData;
@@ -307,9 +299,7 @@ void updateData(){
     data += ",";
     data += visData[5];
     data += "\n";
-
-    //Serial.print(data);
-    Serial.println(visData[2]);
+    //FLY-U-MAH CUSTOM DATA ENDS HERE
 
     timer5 = millis() - timer7; ///////////// Timer 5 End ///////////// 
     

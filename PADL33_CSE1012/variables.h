@@ -24,10 +24,15 @@
 #define DATA_DELAY 1000
 #define OK(ok) (ok ? F("  ->  OK") : F("  ->  ERROR!")) // Convert uint8_t into OK/ERROR
 
+
+
 LED YELLOW_LED(YELLOW_LED_PIN);
 LED GREEN_LED(GREEN_LED_PIN);
 LED BLUE_LED(BLUE_LED_PIN);
 LED RED_LED(RED_LED_PIN);
+
+const short IR_MUX_PORT = 0;
+const short VIS_MUX_PORT = 1;
 
 byte greenLedCounter = 0;
 
