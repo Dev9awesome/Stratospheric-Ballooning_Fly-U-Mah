@@ -25,12 +25,12 @@ void lightUpdate(){
   myMux.setPort(VIS_MUX_PORT);
   visSensor.takeMeasurements();
 
-  visData[0] = visSensor.getCalibratedViolet();
-  visData[1] = visSensor.getCalibratedBlue();
-  visData[2] = visSensor.getCalibratedGreen();
-  visData[3] = visSensor.getCalibratedYellow();
-  visData[4] = visSensor.getCalibratedOrange();
-  visData[5] = visSensor.getCalibratedRed();
+  visData[0] = visSensor.getViolet();
+  visData[1] = visSensor.getBlue();
+  visData[2] = visSensor.getGreen();
+  visData[3] = visSensor.getYellow();
+  visData[4] = visSensor.getOrange();
+  visData[5] = visSensor.getRed();
   }
 
   

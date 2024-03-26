@@ -31,6 +31,7 @@ LED GREEN_LED(GREEN_LED_PIN);
 LED BLUE_LED(BLUE_LED_PIN);
 LED RED_LED(RED_LED_PIN);
 
+//I2C MUX constants
 const short IR_MUX_PORT = 0;
 const short VIS_MUX_PORT = 1;
 
@@ -158,6 +159,8 @@ float resistanceData;
 //Light and Mux Variables (new)
 float irData[6];
 float visData[6]; 
+
+//Thermistor in Analog MUX variable (new)
 float thermData[16];
 
 bool hpGPS = false;
