@@ -52,7 +52,6 @@ AS726X visSensor;
 Adafruit_BME680 airSensor;
 
 
-
 void setup() { //////////////////////////////////////////// SETUP END ////////////////////////////////////////////
 
     systemSetUp();
@@ -79,20 +78,25 @@ delay(1000);
 if (myMux.begin() == false)
   {
     Serial.println("Mux not detected. Freezing...");
-    while (1)
+//    while (1)
       ;
-  }   
-myMux.setPort(IR_MUX_PORT);
-if(!irSensor.begin()){
-  Serial.println("IR NOT DETECTED");
-    }
-delay(1000);
+  }  
 
-myMux.setPort(VIS_MUX_PORT);
-if(!visSensor.begin()){
-  Serial.println("VIS NOT DETECTED");
-  }
-delay(1000);
+else{
+  myMux.setPort(IR_MUX_PORT);
+  if(!irSensor.begin()){
+    Serial.println("IR NOT DETECTED");
+      }
+  delay(1000);
+  
+  myMux.setPort(VIS_MUX_PORT);
+  if(!visSensor.begin()){
+    Serial.println("VIS NOT DETECTED");
+    }
+  delay(1000);
+}
+  
+
 
 muxThermSetup();
 delay(1000);
@@ -118,6 +122,18 @@ void updateData(){
     systemUpdate();
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
+Serial.println("Test Thermistor Voltage: " + String(analogRead(A3) /1023.0 * 5));
+Serial.println("MUX thermistor Voltage: " + String(thermData[15]));
+
+Serial.println("Celsius Readings");
+Serial.println("Test: " + String(analogToCel(analogRead(A3))));
+Serial.println("Same Num as Mux: " + String(analogToCel(voltageToAnalog(thermData[15]))));
+Serial.println("MUX: " + String(testCelReading));
+Serial.println("Corrected MUX: "+ String(analogToCel(voltageToAnalog(thermData[15] + 0.33)))); //offset by 0.33volts and 0.35 deg C
+ 
+
+
+
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
 

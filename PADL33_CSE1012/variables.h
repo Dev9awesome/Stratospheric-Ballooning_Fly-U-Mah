@@ -70,6 +70,10 @@ bool thermExtOrADC = true; // true means you're using an external thermistor
 Thermistor ThermistorExt(EXTERNAL_THERMISTOR_PIN);
 Thermistor ThermistorInt(INTERNAL_THERMISTOR_PIN);
 
+
+
+
+
 // SdFs SD;
 // FsFile datalog;
 SdFat SD;
@@ -162,6 +166,7 @@ float visData[6];
 
 //Thermistor in Analog MUX variable (new)
 float thermData[16];
+float testCelReading;
 
 bool hpGPS = false;
 int gpsMonth = 999;
