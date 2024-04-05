@@ -36,7 +36,7 @@
 
 
 //////////////////////////////////////////// GLOBAL VARIABLES ////////////////////////////////////////////
-String header = "hh:mm:ss,FltTimer,T(s),T(ms),Hz,T2,T3,T4,T5,T6,totT,extT(F) or ADC,extT(C),intT(F),intT(C),Fix Type,RTK,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAcc(MM),VertAcc(MM),VertVel(Fte3/S),VertVel(MM/S),ECEFstat,ECEFX(CM),ECEFY(CM),ECEFZ(CM),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,kPa,ATM,PSI,C,F,Ft,M,VV(Ft),VV(M),G(y),G(x),G(z),Deg/S(x),Deg/S(y),Deg/S(z),uT(x),uT(y),uT(z),Humidity(%),GasResistance(kOhm),IR-R-reading,IR-S-reading,IR-T-reading,IR-U-reading,IR-V-reading,IR-W-reading,VIS-V-reading,VIS-B-reading,VIS-G-reading,VIS-Y-reading,VIS-O-reading,VIS-R-reading, MuxTherm0,MuxTherm1,MuxTherm2,MuxTherm3,MuxTherm4,MuxTherm5,MuxTherm6,MuxTherm7,MuxTherm8,MuxTherm9,MuxTherm10,MuxTherm11,MuxTherm12,MuxTherm13,MuxTherm14,MuxTherm15," + String(Version);
+String header = "hh:mm:ss,FltTimer,T(s),T(ms),Hz,T2,T3,T4,T5,T6,totT,extT(F) or ADC,extT(C),intT(F),intT(C),Fix Type,RTK,PVT,Sats,Date,Time,Lat,Lon,Alt(Ft),Alt(M),HorizAcc(MM),VertAcc(MM),VertVel(Fte3/S),VertVel(MM/S),ECEFstat,ECEFX(CM),ECEFY(CM),ECEFZ(CM),NedVelNorth(M/S),NedVelEast(M/S),NedVelDown(M/S),GndSpd(M/S),Head(Deg),PDOP,kPa,ATM,PSI,C,F,Ft,M,VV(Ft),VV(M),G(y),G(x),G(z),Deg/S(x),Deg/S(y),Deg/S(z),uT(x),uT(y),uT(z),Humidity(%),GasResistance(kOhm),IR-R-reading,IR-S-reading,IR-T-reading,IR-U-reading,IR-V-reading,IR-W-reading,VIS-V-reading,VIS-B-reading,VIS-G-reading,VIS-Y-reading,VIS-O-reading,VIS-R-reading, MuxTherm0,MuxTherm1,MuxTherm2,MuxTherm3,MuxTherm4,MuxTherm5,MuxTherm6,MuxTherm7,MuxTherm8,MuxTherm9,MuxTherm10,MuxTherm11,MuxTherm12,MuxTherm13,MuxTherm14,MuxTherm15,ControlTherm," + String(Version);
 
 
 //////////////////////////////////////////// GLOBAL VARIABLES ////////////////////////////////////////////
@@ -51,6 +51,7 @@ AS726X visSensor;
 //BME688 (new)
 Adafruit_BME680 airSensor;
 
+float tempControlTemp;
 
 void setup() { //////////////////////////////////////////// SETUP END ////////////////////////////////////////////
 
@@ -101,6 +102,8 @@ else{
 muxThermSetup();
 delay(1000);
 
+
+
 Serial.println("SETUP ENDED");
 //////////////////////////////////////////// ADD SETUP CODE HERE ////////////////////////////////////////////
 
@@ -131,7 +134,7 @@ Serial.println("Same Num as Mux: " + String(analogToCel(voltageToAnalog(thermDat
 Serial.println("MUX: " + String(testCelReading));
 Serial.println("Corrected MUX: "+ String(analogToCel(voltageToAnalog(thermData[15] + 0.33)))); //offset by 0.33volts and 0.35 deg C
  
-
+tempControlTemp = analogToCel(analogRead(A3));
 
 
 
@@ -349,6 +352,8 @@ Serial.println("Corrected MUX: "+ String(analogToCel(voltageToAnalog(thermData[1
     data += thermData[14];
     data += ",";
     data += thermData[15];
+    data += ",";
+    data += tempControlTemp;
     data += "\n";
     //FLY-U-MAH CUSTOM DATA ENDS HERE
 

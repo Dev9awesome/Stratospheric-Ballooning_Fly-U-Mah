@@ -40,10 +40,7 @@ void muxThermUpdate() {
       }
       
       int analogMuxValue = analogRead(AMUX_ANALOG_PIN);
-      thermData[j] = analogMuxValue/1023.0 * 5; //NOTE: CONVERSION TO TEMPERATURE HAS NOT BEEN CALCULATED YET. THIS CURRENTLY READS VOLTAGE DROP.
-      if(j == 15){
-        testCelReading = analogToCel(analogMuxValue);
-        }
+      thermData[j] = analogToCel(analogMuxValue); //NOTE: THIS MAY ONLY BE ACCURATE FOR ROUGHLY ROOM TEMPERATURE
       amux_bit = amux_bit+1;
   }
   amux_bit = 0;
