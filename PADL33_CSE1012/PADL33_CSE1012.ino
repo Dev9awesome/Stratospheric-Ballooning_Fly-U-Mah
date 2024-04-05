@@ -125,11 +125,6 @@ void updateData(){
     systemUpdate();
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
-Serial.println("Chain Therm 1: " + String(thermData[1]));
-Serial.println("Chain Therm 2: " + String(thermData[2]));
-Serial.println("Chain Therm 3: " + String(thermData[3]));
-Serial.println("Chain Therm 4: " + String(thermData[4]));
-Serial.println("Mux Therm 0: " + String(thermData[0]));
 tempControlTemp = analogToCel(analogRead(A3));
 
 
