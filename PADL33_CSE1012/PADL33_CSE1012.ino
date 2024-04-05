@@ -125,15 +125,11 @@ void updateData(){
     systemUpdate();
 
 //////////////////////////////////////////// ADD LOOP CODE HERE ////////////////////////////////////////////
-Serial.println("Test Thermistor Voltage: " + String(analogRead(A3) /1023.0 * 5));
-Serial.println("MUX thermistor Voltage: " + String(thermData[15]));
-
-Serial.println("Celsius Readings");
-Serial.println("Test: " + String(analogToCel(analogRead(A3))));
-Serial.println("Same Num as Mux: " + String(analogToCel(voltageToAnalog(thermData[15]))));
-Serial.println("MUX: " + String(testCelReading));
-Serial.println("Corrected MUX: "+ String(analogToCel(voltageToAnalog(thermData[15] + 0.33)))); //offset by 0.33volts and 0.35 deg C
- 
+Serial.println("Chain Therm 1: " + String(thermData[1]));
+Serial.println("Chain Therm 2: " + String(thermData[2]));
+Serial.println("Chain Therm 3: " + String(thermData[3]));
+Serial.println("Chain Therm 4: " + String(thermData[4]));
+Serial.println("Mux Therm 0: " + String(thermData[0]));
 tempControlTemp = analogToCel(analogRead(A3));
 
 
