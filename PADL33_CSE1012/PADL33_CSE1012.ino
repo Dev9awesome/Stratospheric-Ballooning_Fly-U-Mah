@@ -4,7 +4,14 @@
       MnSGC Ballooning/Rocketry PADL-33 Flight Code
       Created by: Ashton Posey
 
-      Modification Date: 1/14/24
+      Fly-U-Mah additions by Dev Patel
+      *Added data readings for the following sensors 
+      *BME688 gas/humidity sensors
+      *AS7262 Visual Light sensor
+      *AS7263 Infrared Light sensor
+      *16 analog thermistors
+
+      Modification Date: 4/5/24
 ************************************************/
 //Purpose: Code for the PADL-33 Flight Computer
 #define Version "2.2 CSE 1012"

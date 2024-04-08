@@ -1,6 +1,27 @@
 /************************************************
       PADL-33 Global Variables
       Created by: Ashton Posey
+
+      Modified by: Dev Patel
+      4/5/2024 with the following variables:
+      const short IR_MUX_PORT - Digital MUX port for AS7263
+      const short VIS_MUX_PORT - Digital MUX port for AS7262
+
+      byte timerGas, timerSpectral, timerMuxTherm, timerTotal - timers for data collection
+
+      Stores BME688 data:
+      * float humidityData 
+      * float resistanceData
+      
+      Stores AS726X varaibles
+      * float irData[6];
+      * float visData[6]; 
+
+      Stores Thermistor data from analog MUX
+      * float thermData[16];
+      
+
+      
 ************************************************/
 //Purpose: Global variables for PADL-33
 

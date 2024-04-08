@@ -1,6 +1,7 @@
 /*
 * Helper file for I2C MUX and AS726x visual light and ir sensors. Allow for clean, readable, non-blocking code in the system file
 * lightUpdate() - takes readings from IR sensor and then the VIS sensor when connected to an I2C mux, using variables.h constants for ports
+* Uses raw readings as the total range of all possible values is standardized between wavelengths/colors
 * STATUS - FUNCTIONAL 3/25/2024
 */
 #include <SparkFun_I2C_Mux_Arduino_Library.h> 

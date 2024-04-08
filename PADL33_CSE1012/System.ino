@@ -1,6 +1,13 @@
 /************************************************
       PADL-33 System Code
       Created by: Ashton Posey
+
+      Modified by: Dev Patel 
+      4/5/2024:
+
+      systemUpdate() now contains gasUpdate() (from BME688.ino), lightUpdate() (from Light_MUX.ino) and muxThermUpdate() (from Analog_Mux_CSE1012.ino) and the associated timers
+      This allows for non-blocking data updating in a concise, readable manner.
+  
 ************************************************/
 //Purpose: General functions to run the buzzer, heater, update frequency, thermistors, voltage readers, & Micro SD Card
 

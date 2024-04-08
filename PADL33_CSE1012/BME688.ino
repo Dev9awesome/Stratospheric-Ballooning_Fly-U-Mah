@@ -1,6 +1,7 @@
 /* Dev Patel - 3.22.2024
  *  Helper for BME688 with the PADL
  *  gasUpdate() - creates a reading and stores values into data variables
+ *  Using this function, it is easier to incorporate this update in System.ino's systemUpdate()
  *  STATUS - FUNCTIONAL 3/25/2024
  */
 #include "Adafruit_BME680.h"
