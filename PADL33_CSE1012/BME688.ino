@@ -12,4 +12,5 @@ void gasUpdate(){
 
   humidityData = airSensor.humidity;
   resistanceData = airSensor.gas_resistance / 1000.0; //Divides by 1000 to convert from Ohms to KiloOhms
+  BMEtempData = airSensor.temperature;
 }

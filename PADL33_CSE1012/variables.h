@@ -180,6 +180,7 @@ dynModel dynamicModel = DYN_MODEL_AIRBORNE4g; //setting dynamic model to 8 (airb
 //BME688 Variables (new)
 float humidityData;
 float resistanceData;
+float BMEtempData;
 
 //Light and Mux Variables (new)
 float irData[6];
